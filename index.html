@@ -42,9 +42,12 @@
                     this.y--;
                 }
             }
-            this.attack = function (otherobject) {
-                penalties = 0;
-                opponentpenalties = 0;
+            this.shoot = function () {
+                if(Math.sqrt(this.x-goalX) + Math.sqrt(this.y-goalY
+)) {
+}
+
+
             }
             this.respawn() {
                 this.x = options.x || 10;
@@ -69,7 +72,7 @@
                 return collision;
             }
         }
-        var Ball = new Box({
+        var ball = new Box({
             x: 240,
             y: 240,
             width: 20,
@@ -155,18 +158,28 @@
             input(player);
         }
         function draw() {
-            if (player.collideWith(enemy)) {
+            if (player.collideWith(ball)) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = "gray";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+                drawBox(ball);
                 drawBox(player);
-                drawBox(enemy);
+                drawBox(teammate);
+                drawBox(otherteammate);
+                drawBox(enemyone);
+                drawBox(ememytwo);
+                drawBox(enemythree);
             } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = "gray";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+                drawBox(ball);
                 drawBox(player);
-                drawBox(enemy);
+                drawBox(teammate);
+                drawBox(otherteammate);
+                drawBox(enemyone);
+                drawBox(ememytwo);
+                drawBox(enemythree);
             }
         }
         function loop() {
