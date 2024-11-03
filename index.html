@@ -15,7 +15,7 @@
         canvas.height = 400;
         var keys = {};
         goalX = 50;
-        goalY = 200
+        goalY = 200;
         window.addEventListener('keydown', function (e) {
             keys[e.keyCode] = true;
             e.preventDefault();
@@ -72,6 +72,7 @@
                 return collision;
             }
         }
+        
         var goal = new Box({
             x: 240,
             y: 15,
@@ -88,7 +89,6 @@
             color: "white",
             speed: 0
         });
-
         var ball = new Box({
             x: 240,
             y: 240,
@@ -141,6 +141,7 @@
             height: 40,
             color: "black"
         });
+        
         function input(player) {
             if (37 in keys) {
                 if (player.x - player.speed > 0) {
