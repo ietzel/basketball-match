@@ -11,11 +11,13 @@
     <script>
         var canvas = document.getElementById('gC');
         var ctx = canvas.getContext('2d');
-        canvas.width = 500;
-        canvas.height = 400;
+        canvas.width = 400;
+        canvas.height = 300;
         var keys = {};
-        goalX = 50;
-        goalY = 200;
+        AgoalX = 50;
+        AgoalY = 150;
+        BgoalX = 250;
+        BgoalY = 150;
         window.addEventListener('keydown', function (e) {
             keys[e.keyCode] = true;
             e.preventDefault();
