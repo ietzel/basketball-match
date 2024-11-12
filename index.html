@@ -50,7 +50,7 @@
                     this.y--;
                 }
             }
-            this.shoot = function(team) {
+            this.shoot = function() {
                 points = 0;
                 if((Math.sqrt(((this.x-goalX)^2) + ((this.y-goalY)^2))) < 100) {
                     if(Math.random() > 0.5) {
@@ -61,10 +61,34 @@
                         points = 3;
                     }
                 }
-                if(team == "a") {
+                if(playerIndex < 4) {
                     AteamPoints += points;
                 } else {
                     BteamPoints += points;
+                }
+                if(playerIndex > 3) {
+                    playerIndex = Math.round(Math.random()*3)
+                    if(playerIndex < 1) {
+                        playerIndex = 1;
+                    }
+                } else {
+                    playerIndex = Math.round(Math.random()*3) + 3
+                    if(playerIndex < 4) {
+                        playerIndex = 4;
+                    }
+                }
+            }
+            this.pass = function() {
+                if(playerIndex < 4) {
+                    playerIndex = Math.round(Math.random()*3)
+                    if(playerIndex < 1) {
+                        playerIndex = 1;
+                    }
+                } else {
+                    playerIndex = Math.round(Math.random()*3) + 3
+                    if(playerIndex < 4) {
+                        playerIndex = 4;
+                    }
                 }
             }
             this.respawn() {
@@ -175,32 +199,35 @@
             })
         ];
         function input(player) {
+            if (13 in keys) {
+                players[playerIndex].pass();
+            }
             if (32 in keys) {
-                player.shoot();
+                players[playerIndex].shoot();
             }
             if (37 in keys) {
-                if (player.x - player.speed > 0) {
-                    player.x -= player.speed;
+                if (players[playerIndex].x - players[playerIndex].speed > 0) {
+                    players[playerIndex].x -= players[playerIndex].speed;
                 }
-                player.direction = 'left';
+                players[playerIndex].direction = 'left';
             }
             if (39 in keys) {
-                if (player.x + player.width + player.speed < canvas.width) {
-                    player.x += player.speed;
+                if (players[playerIndex].x + players[playerIndex].width + players[playerIndex].speed < canvas.width) {
+                    players[playerIndex].x += players[playerIndex].speed;
                 }
-                player.direction = 'right';
+                players[playerIndex].direction = 'right';
             }
             if (38 in keys) {
-                if (player.y - player.speed > 0) {
-                    player.y -= player.speed;
+                if (players[playerIndex].y - players[playerIndex].speed > 0) {
+                    players[playerIndex].y -= player.speed;
                 }
                 player.direction = 'up';
             }
             if (40 in keys) {
-                if (player.y + player.height + player.speed < canvas.height) {
-                    player.y += player.speed;
+                if (players[playerIndex].y + players[playerIndex].height + players[playerIndex].speed < canvas.height) {
+                    players[playerIndex].y += players[playerIndex].speed;
                 }
-                player.direction = 'down';
+                players[playerIndex].direction = 'down';
             }
         }
         function drawBox(box) {
