@@ -34,6 +34,7 @@
             this.speed = options.speed || 4;
             this.direction = options.direction || "right" || "up" || "down";
             this.gravity = options.gravity || 4;
+            this.hasball = false;
             this.move = function (otherX, otherY) {
                 if ((this.x) > 0 && (this.x < otherX)) {
                     this.x++;
