@@ -18,6 +18,9 @@
         AgoalY = 150;
         BgoalX = 250;
         BgoalY = 150;
+        AteamPoints = 0;
+        BteamPoints = 0;
+        playerIndex = 1;
         window.addEventListener('keydown', function (e) {
             keys[e.keyCode] = true;
             e.preventDefault();
@@ -47,9 +50,21 @@
                     this.y--;
                 }
             }
-            this.shoot = function() {
-                if(Math.sqrt(((this.x-goalX)^2) + ((this.y-goalY)^2))) {
-                    
+            this.shoot = function(team) {
+                points = 0;
+                if((Math.sqrt(((this.x-goalX)^2) + ((this.y-goalY)^2))) < 100) {
+                    if(Math.random() > 0.5) {
+                        points = 2;
+                    }
+                } else {
+                    if(Math.random() > 0.6667) {
+                        points = 3;
+                    }
+                }
+                if(team == "a") {
+                    AteamPoints += points;
+                } else {
+                    BteamPoints += points;
                 }
             }
             this.respawn() {
@@ -76,6 +91,19 @@
             }
         }
         
+        function displayScore1() {
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "rgb(255,255,255)";
+            var str1 = AteamPoints;
+            ctx.fillText(str1, (canvas.width/2) - 50, 30);
+        }
+        function displayScore2() {
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "rgb(255,255,255)";
+            var str2 = BteamPoints;
+            ctx.fillText(str2, (canvas.width / 2) + 50, 30);
+        }
+        
         var goal = new Box({
             x: 240,
             y: 15,
@@ -100,52 +128,56 @@
             color: "orange",
             speed: 5
         });
-        var player = new Box({
-            x: 150,
-            y: 300,
-            width: 40,
-            height: 40,
-            color: "black",
-            speed: 5
-        });
-        var teammate = new Box({
-            x: 60,
-            y: 50,
-            width: 40,
-            height: 40,
-            color: "black"
-        });
-        var otherteammate = new Box({
-            x: 60,
-            y: 50,
-            width: 40,
-            height: 40,
-            color: "black"
-        });
-        var ememyone = new Box({
-            x: 150,
-            y: 300,
-            width: 40,
-            height: 40,
-            color: "black",
-            speed: 5
-        });
-        var ememytwo = new Box({
-            x: 60,
-            y: 50,
-            width: 40,
-            height: 40,
-            color: "black"
-        });
-        var ememythree = new Box({
-            x: 60,
-            y: 50,
-            width: 40,
-            height: 40,
-            color: "black"
-        });
-        
+        var players = [
+            var player = new Box({
+                x: 150,
+                y: 300,
+                width: 40,
+                height: 40,
+                color: "black",
+                speed: 5
+            }),
+            var teammate = new Box({
+                x: 60,
+                y: 50,
+                width: 40,
+                height: 40,
+                color: "black"
+            }),
+            var otherteammate = new Box({
+                x: 60,
+                y: 50,
+                width: 40,
+                height: 40,
+                color: "black"
+            }),
+            var ememyone = new Box({
+                x: 150,
+                y: 300,
+                width: 40,
+                height: 40,
+                color: "black",
+                speed: 5
+            }),
+            var ememytwo = new Box({
+                x: 60,
+                y: 50,
+                width: 40,
+                height: 40,
+                color: "black"
+            }),
+            var ememythree = new Box({
+                x: 60,
+                y: 50,
+                width: 40,
+                height: 40,
+                color: "black"
+            })
+        ];
         function input(player) {
+            if (32 in keys) {
+                player.shoot();
+            }
             if (37 in keys) {
                 if (player.x - player.speed > 0) {
                     player.x -= player.speed;
@@ -202,6 +234,8 @@
                 drawBox(ememytwo);
                 drawBox(enemythree);
             }
+            displayScore1();
+            displayScore2();
         }
         function loop() {
             enemy.move(player.x, player.y);
